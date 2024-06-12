@@ -1,0 +1,23 @@
+.xo-game-board-box {
+	border: 1px solid black;
+	text-align: center;
+	/* text-align-last: center; */
+	/* vertical-align: bottom; */
+	min-width: 80px;
+	min-height: 80px;
+	align-content: center;
+	/* justify-content: center; */
+	/* justify-items: center; */
+	/* align-items: center; */
+}
+
+#xo-game-board {
+	grid-template-columns: 80px 80px 80px;
+	gap: 1px;
+	display: grid;
+	grid-template-rows: 80px 80px 80px;
+	align-items: center;
+	justify-content: center;
+	/* align-content: center; */
+	/* justify-items: center; */
+}
