@@ -12,10 +12,11 @@ const Turn = {
 	}
 }
 
+const turnBox = document.getElementById('current-turn');
 const XOBordElement = document.getElementById('xo-game-board');
 const XOBordElementBoxes = XOBordElement.children;
 
-console.log(XOBordElementBoxes)
+turnBox.innerText = "X";
 
 for (let i = 0; i < XOBordElementBoxes.length; i++) {
 	const box = XOBordElementBoxes[i]
@@ -31,6 +32,7 @@ function handleClick(e) {
 		case '':
 			box.innerText = Turn.symbol;
 			Turn.end()
+			turnBox.innerText = Turn.symbol;
 			break
 
 		default:
