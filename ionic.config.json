@@ -1,0 +1,7 @@
+{
+  "name": "XO game",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
