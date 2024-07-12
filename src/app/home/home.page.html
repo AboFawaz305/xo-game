@@ -7,17 +7,22 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div id="game-board">
-    <ion-grid [fixed]="true">
-      @for( i of [1,2,3]; track i){
-      <ion-row>
-        @for( j of [1,2,3]; track j){
-        <ion-col>
-          <xo-btn [turn]="turn" (checkEvent)="changeTurn($event)"></xo-btn>
-        </ion-col>
-        }
-      </ion-row>
+  <ion-grid [fixed]="true">
+    <ion-row>
+      <ion-col>
+        <ion-label>{{ winner }}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid [fixed]="true">
+    @for( i of [0,1,2]; track i){
+    <ion-row>
+      @for( j of [0,1,2]; track j){
+      <ion-col>
+        <xo-btn [isEnd]="isEnd" [col]="j" [row]="i" [turn]="turn" (checkEvent)="changeTurn($event)"></xo-btn>
+      </ion-col>
       }
-    </ion-grid>
-  </div>
+    </ion-row>
+    }
+  </ion-grid>
 </ion-content>

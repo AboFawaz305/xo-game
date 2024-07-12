@@ -12,6 +12,9 @@ import { IonicModule } from '@ionic/angular';
 })
 export class XoBtnComponent {
   @Input() turn: 'x' | 'o' | '';
+  @Input() col: number;
+  @Input() row: number;
+  @Input() isEnd: boolean;
   @Output() checkEvent;
   protected state: '' | 'x' | 'o';
   protected wrongChoice: boolean;
@@ -20,16 +23,22 @@ export class XoBtnComponent {
   constructor() {
     this.state = '';
     this.turn = ''
-    this.checkEvent = new EventEmitter<boolean>()
+    this.checkEvent = new EventEmitter<[boolean, number, number]>()
     this.wrongChoice = false;
     this.stateIcon = ''
+    this.col = 0;
+    this.row = 0;
+    this.isEnd = false;
   }
 
   check(value: 'x' | 'o' | '') {
+    if (this.isEnd) {
+      return;
+    }
     if (this.state !== '') {
       this.wrongChoice = true;
       setTimeout(() => { this.wrongChoice = false }, 1000)
-      this.checkEvent.emit(false);
+      this.checkEvent.emit([false, this.row, this.col]);
       return;
     }
 
@@ -38,7 +47,6 @@ export class XoBtnComponent {
       this.stateIcon = 'close-outline'
     else
       this.stateIcon = 'ellipse-outline'
-    this.checkEvent.emit(true)
+    this.checkEvent.emit([true, this.row, this.col])
   }
-
 }
