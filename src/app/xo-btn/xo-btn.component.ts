@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { GameStateStoreService } from '../game-state-store.service';
 
 @Component({
   imports: [
@@ -10,43 +11,44 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./xo-btn.component.scss'],
   standalone: true
 })
-export class XoBtnComponent {
-  @Input() turn: 'x' | 'o' | '';
+export class XoBtnComponent implements OnChanges {
+  @Input() state: 'x' | 'o' | '';
   @Input() col: number;
   @Input() row: number;
   @Input() isEnd: boolean;
   @Output() checkEvent;
-  protected state: '' | 'x' | 'o';
   protected wrongChoice: boolean;
   protected stateIcon: 'close-outline' | 'ellipse-outline' | '';
 
-  constructor() {
-    this.state = '';
-    this.turn = ''
+  constructor(private gameState: GameStateStoreService) {
     this.checkEvent = new EventEmitter<[boolean, number, number]>()
     this.wrongChoice = false;
     this.stateIcon = ''
     this.col = 0;
     this.row = 0;
     this.isEnd = false;
+    this.state = ''
   }
 
-  check(value: 'x' | 'o' | '') {
+  ngOnChanges(changes: SimpleChanges): void {
+    this.stateIcon = this.state === 'x' ? 'close-outline' : this.state === 'o' ? 'ellipse-outline' : '';
+  }
+
+  check() {
     if (this.isEnd) {
       return;
     }
-    if (this.state !== '') {
+    if (this.gameState.getBoxState(this.row, this.col) !== '') {
       this.wrongChoice = true;
       setTimeout(() => { this.wrongChoice = false }, 1000)
       this.checkEvent.emit([false, this.row, this.col]);
       return;
     }
 
-    this.state = value;
-    if (value === 'x')
-      this.stateIcon = 'close-outline'
-    else
-      this.stateIcon = 'ellipse-outline'
+    this.gameState.MarkBoxState(this.row, this.col)
+    //@ts-ignore
+    this.state = this.gameState.getBoxState(this.row, this.col);
+    this.stateIcon = this.state === 'x' ? 'close-outline' : this.state === 'o' ? 'ellipse-outline' : '';
     this.checkEvent.emit([true, this.row, this.col])
   }
 }

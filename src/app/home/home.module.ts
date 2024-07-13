@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { XoBtnComponent } from '../xo-btn/xo-btn.component';
+import { GameStateStoreService } from '../game-state-store.service';
+import { ActionBtnBarComponent } from '../action-btn-bar/action-btn-bar.component';
 
 
 @NgModule({
@@ -13,8 +15,10 @@ import { XoBtnComponent } from '../xo-btn/xo-btn.component';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    XoBtnComponent
+    XoBtnComponent,
+    ActionBtnBarComponent
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [GameStateStoreService]
 })
 export class HomePageModule { }
