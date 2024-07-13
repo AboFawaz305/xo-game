@@ -26,6 +26,8 @@ export class HomePage {
 
   reset() {
     this.gameState.reset();
+    const XOBtns = document.querySelectorAll('xo-btn')
+    location.reload();
   }
 
 }
