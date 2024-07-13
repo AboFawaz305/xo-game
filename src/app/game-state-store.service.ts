@@ -24,11 +24,11 @@ export class GameStateStoreService {
     localStorage.setItem('turn', 'x');
   }
 
-  getBoxState(row: number, col: number): XOSlot | null {
+  getBoxState(row: number, col: number): XOSlot {
     const ls = localStorage.getItem('state');
     if (ls === null) {
       console.error('game state not initialized')
-      return null;
+      return '';
     }
     const state = JSON.parse(ls);
     return state[row][col]
@@ -51,7 +51,8 @@ export class GameStateStoreService {
       console.error('game state not initialized')
       return null;
     }
-    return JSON.parse(ls);
+    //@ts-ignore
+    return ls;
   }
 
   passTurn() {
@@ -60,6 +61,7 @@ export class GameStateStoreService {
       return
     }
     turn = turn === 'x' ? 'o' : 'x';
+    localStorage.setItem('turn', turn)
   }
 
   reset() {
