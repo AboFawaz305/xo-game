@@ -1,8 +1,7 @@
 {
   "name": "xo-game",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "1.0.0",
+  "author": "AboFawaz305",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
