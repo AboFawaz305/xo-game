@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GameStateStoreService } from '../game-state-store.service';
+import { GameLoopService } from '../game-loop.service';
 
 @Component({
   selector: 'app-home',
@@ -7,12 +8,12 @@ import { GameStateStoreService } from '../game-state-store.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  protected winner: '' | 'draw' | 'X wins' | 'O wins';
+  protected winner: string;
   protected isEnd: boolean;
 
-  constructor(protected gameState: GameStateStoreService) {
-    this.winner = '';
-    this.isEnd = false;
+  constructor(protected gameState: GameStateStoreService, protected gameLoop: GameLoopService) {
+    this.winner = gameState.getWinner();
+    this.isEnd = gameState.getEnd();
   }
 
   changeTurn(checked: [boolean, number, number]) {
@@ -20,13 +21,21 @@ export class HomePage {
       return;
     }
 
-    // this.gameState.MarkBoxState(checked[1], checked[2]);
+    if (this.gameLoop.isEnd()) {
+      this.gameState.setEnd();
+      const w = this.gameLoop.getWinner();
+      this.gameState.setWinner(w);
+      this.winner = this.gameState.getWinner();
+      return;
+    }
+
     this.gameState.passTurn();
   }
 
   reset() {
     this.gameState.reset();
-    const XOBtns = document.querySelectorAll('xo-btn')
+    this.winner = '';
+    this.isEnd = false;
     location.reload();
   }
 

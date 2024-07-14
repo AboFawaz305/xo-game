@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-type XOSlot = 'x' | 'o' | '';
+export type XOSlot = 'x' | 'o' | '';
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +10,22 @@ export class GameStateStoreService {
   constructor() { }
 
   init() {
-    if (localStorage.getItem('state') !== null) {
-      return;
+    if (localStorage.getItem('state') === null) {
+      localStorage.setItem('state', JSON.stringify([
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+      ]))
     }
-    localStorage.setItem('state', JSON.stringify([
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', ''],
-    ]))
-    if (localStorage.getItem('turn') !== null) {
-      return;
+    if (localStorage.getItem('turn') === null) {
+      localStorage.setItem('turn', 'x');
     }
-    localStorage.setItem('turn', 'x');
+    if (localStorage.getItem('isEnd') === null) {
+      localStorage.setItem('isEnd', 'false');
+    }
+    if (localStorage.getItem('winner') === null) {
+      localStorage.setItem('winner', '');
+    }
   }
 
   getBoxState(row: number, col: number): XOSlot {
@@ -64,6 +68,28 @@ export class GameStateStoreService {
     localStorage.setItem('turn', turn)
   }
 
+  getEnd(): boolean {
+    //@ts-ignore
+    const e = JSON.parse(localStorage.getItem('isEnd'));
+    return e;
+  }
+
+  setEnd() {
+    localStorage.setItem('isEnd', 'true')
+  }
+
+  getWinner(): string {
+    const w = localStorage.getItem('winner');
+    //@ts-ignore
+    return w;
+  }
+
+  setWinner(w: XOSlot) {
+    localStorage.setItem('winner',
+      w === 'x' ? 'X wins' : w === 'o' ? 'O wins' : 'draw'
+    )
+  }
+
   reset() {
     localStorage.setItem('state', JSON.stringify([
       ['', '', ''],
@@ -71,5 +97,7 @@ export class GameStateStoreService {
       ['', '', ''],
     ]))
     localStorage.setItem('turn', 'x');
+    localStorage.setItem('isEnd', 'false');
+    localStorage.setItem('winner', '');
   }
 }
