@@ -26,6 +26,7 @@ export class HomePage {
       const w = this.gameLoop.getWinner();
       this.gameState.setWinner(w);
       this.winner = this.gameState.getWinner();
+      this.isEnd = this.gameState.getEnd();
       return;
     }
 
