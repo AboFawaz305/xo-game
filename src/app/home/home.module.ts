@@ -7,6 +7,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { XoBtnComponent } from '../xo-btn/xo-btn.component';
 import { GameStateStoreService } from '../game-state-store.service';
 import { ActionBtnBarComponent } from '../action-btn-bar/action-btn-bar.component';
+import { GameLoopService } from '../game-loop.service';
 
 
 @NgModule({
@@ -19,6 +20,6 @@ import { ActionBtnBarComponent } from '../action-btn-bar/action-btn-bar.componen
     ActionBtnBarComponent
   ],
   declarations: [HomePage],
-  providers: [GameStateStoreService]
+  providers: [GameStateStoreService, GameLoopService]
 })
 export class HomePageModule { }
