@@ -2,9 +2,31 @@
   <ion-row>
     <ion-col style="display:flex; justify-content: center; align-items: center;">
       <ion-button color="danger" size="small" (click)="restart()">
-        <ion-icon slot="start" name="reload-outline"></ion-icon>
         Restart
       </ion-button>
     </ion-col>
+    <ion-col style="display:flex; justify-content: center; align-items: center;">
+      <ion-button id="play-against-computer" color="primary" size="small">Play against computer</ion-button>
+      <ion-icon slot="start" name="terminal-outline"></ion-icon>
+    </ion-col>
   </ion-row>
 </ion-grid>
+
+<ion-modal #modal trigger="play-against-computer">
+  <ng-template>
+    <div class="wrapper">
+      <h1>Play against computer</h1>
+
+      <ion-list lines="none">
+        <ion-item button="true" detail="false" (click)="playAgainstComputer('o');modal.dismiss()">
+          <ion-icon name="clos-outline"></ion-icon>
+          <ion-label>Play as X</ion-label>
+        </ion-item>
+        <ion-item button="true" detail="false" (click)="playAgainstComputer('x');modal.dismiss()">
+          <ion-icon name="ellips-outline"></ion-icon>
+          <ion-label>Play as O</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ng-template>
+</ion-modal>

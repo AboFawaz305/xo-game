@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { XOSlot } from '../game-state-store.service';
 
 @Component({
   selector: 'app-action-btn-bar',
@@ -12,6 +13,7 @@ import { IonicModule } from '@ionic/angular';
 })
 export class ActionBtnBarComponent implements OnInit {
   @Output() restartEvent = new EventEmitter<void>();
+  @Output() playAgainstComputerEvent = new EventEmitter<XOSlot>()
 
   constructor() { }
 
@@ -19,6 +21,10 @@ export class ActionBtnBarComponent implements OnInit {
 
   restart() {
     this.restartEvent.emit();
+  }
+
+  playAgainstComputer(role: XOSlot) {
+    this.playAgainstComputerEvent.emit(role)
   }
 
 }
