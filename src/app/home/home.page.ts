@@ -13,6 +13,7 @@ export class HomePage {
   protected isEnd: boolean;
   protected playAgainstComputerRole: XOSlot = '';
   protected updateBtns: boolean = false;
+  protected updateInfo = false;
 
   constructor(protected gameState: GameStateStoreService, protected gameLoop: GameLoopService, private playAgainstComputer: PlayAgainstComputerService) {
     this.winner = gameState.getWinner();
@@ -31,11 +32,16 @@ export class HomePage {
       this.gameState.setWinner(w);
       this.winner = this.gameState.getWinner();
       this.isEnd = this.gameState.getEnd();
+      if (this.winner !== 'draw') {
+        const wpid = w === 'x' ? 1 : 2;
+        this.gameState.incrementPlayerScore(wpid);
+        this.updateInfo = !this.updateInfo;
+      }
       return;
     }
 
     this.gameState.passTurn();
-
+    this.updateInfo = !this.updateInfo;
     if (this.playAgainstComputerRole === this.gameState.getTurn()) {
       this.playAgainstComputer.play();
       this.updateBtns = !this.updateBtns;
@@ -50,7 +56,7 @@ export class HomePage {
       }
       this.gameState.passTurn()
     }
-
+    this.updateInfo = !this.updateInfo;
   }
 
   reset() {
