@@ -20,12 +20,14 @@
     <ion-row>
       @for( j of [0,1,2]; track j){
       <ion-col>
-        <xo-btn [state]="gameState.getBoxState(i,j)" [isEnd]="isEnd" [col]="j" [row]="i"
+        <xo-btn [playAgainstComputerRule]="playAgainstComputerRole" [update]="updateBtns"
+          [state]="gameState.getBoxState(i,j)" [isEnd]="isEnd" [col]="j" [row]="i"
           (checkEvent)="changeTurn($event)"></xo-btn>
       </ion-col>
       }
     </ion-row>
     }
   </ion-grid>
-  <app-action-btn-bar (restartEvent)="reset()"></app-action-btn-bar>
+  <app-action-btn-bar (playAgainstComputerEvent)="startPlayAgainstComputer($event)"
+    (restartEvent)="reset()"></app-action-btn-bar>
 </ion-content>

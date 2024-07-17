@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { GameStateStoreService } from '../game-state-store.service';
+import { GameStateStoreService, XOSlot } from '../game-state-store.service';
+import { state } from '@angular/animations';
 
 @Component({
   imports: [
@@ -16,7 +17,10 @@ export class XoBtnComponent implements OnChanges {
   @Input() col: number;
   @Input() row: number;
   @Input() isEnd: boolean;
+  @Input() update: boolean = false;
+  @Input() playAgainstComputerRule: XOSlot = '';
   @Output() checkEvent;
+  protected hide = true;
   protected wrongChoice: boolean;
   protected stateIcon: 'close-outline' | 'ellipse-outline' | '';
 
@@ -31,13 +35,22 @@ export class XoBtnComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.state = this.gameState.getBoxState(this.row, this.col);
     this.stateIcon = this.state === 'x' ? 'close-outline' : this.state === 'o' ? 'ellipse-outline' : '';
+    this.hide = this.state === '';
+
   }
 
   check() {
     if (this.isEnd) {
       return;
     }
+
+    if (this.playAgainstComputerRule === this.gameState.getTurn()) {
+      this.checkEvent.emit([true, this.row, this.col])
+      return;
+    }
+
     if (this.gameState.getBoxState(this.row, this.col) !== '') {
       this.wrongChoice = true;
       setTimeout(() => { this.wrongChoice = false }, 1000)
@@ -48,6 +61,7 @@ export class XoBtnComponent implements OnChanges {
     this.gameState.MarkBoxState(this.row, this.col)
     //@ts-ignore
     this.state = this.gameState.getBoxState(this.row, this.col);
+    this.hide = this.state === '';
     this.stateIcon = this.state === 'x' ? 'close-outline' : this.state === 'o' ? 'ellipse-outline' : '';
     this.checkEvent.emit([true, this.row, this.col])
   }
