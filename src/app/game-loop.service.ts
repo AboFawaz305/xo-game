@@ -77,7 +77,7 @@ export class GameLoopService {
   }
 
   isEnd(): boolean {
-    return this.isDraw() || this.isWinByCol() || this.isWinByRow() || this.isWinByDiagnal();
+    return this.isWinByCol() || this.isWinByRow() || this.isWinByDiagnal() || this.isDraw();
   }
 
   getWinner() {
