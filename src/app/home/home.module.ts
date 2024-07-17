@@ -8,6 +8,7 @@ import { XoBtnComponent } from '../xo-btn/xo-btn.component';
 import { GameStateStoreService } from '../game-state-store.service';
 import { ActionBtnBarComponent } from '../action-btn-bar/action-btn-bar.component';
 import { GameLoopService } from '../game-loop.service';
+import { InformationBarComponent } from './information-bar/information-bar.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { GameLoopService } from '../game-loop.service';
     IonicModule,
     HomePageRoutingModule,
     XoBtnComponent,
-    ActionBtnBarComponent
+    ActionBtnBarComponent,
+    InformationBarComponent,
   ],
   declarations: [HomePage],
   providers: [GameStateStoreService, GameLoopService]

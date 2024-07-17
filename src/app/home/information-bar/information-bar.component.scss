@@ -1,0 +1,12 @@
+#info-bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  .info-item{
+    flex: 1;
+    text-align: center;
+  }
+}
+
+
