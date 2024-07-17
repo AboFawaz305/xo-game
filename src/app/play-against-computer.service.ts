@@ -14,6 +14,8 @@ export class PlayAgainstComputerService {
   }
 
   play() {
+    console.log("a");
+
     // get empty slots and store it in moves array
     const moves: number[][] = [];
     for (let i = 0; i < 3; i++) {
@@ -23,8 +25,7 @@ export class PlayAgainstComputerService {
         }
       }
     }
-    const choice = Math.floor(Math.random() * moves.length);
-    //@ts-ignore
+    const choice = moves[Math.floor(Math.random() * moves.length)];
     this.gameState.MarkBoxState(choice[0], choice[1]);
   }
 
